@@ -23,29 +23,34 @@ function operate(operator, num1, num2)
     switch (operator)
     {
         case "+":
-            add(num1, num2);
-            break;
+            return add(num1, num2);
         case "-":
-            subtract(num1,num2);
-            break;
+           return subtract(num1,num2);
         case "X":
-            multiply(num1,num2);
-            break;
+            return multiply(num1,num2);
         case "/":
-            divide(num1, num2);
-            break;
+            return divide(num1, num2);
+            
     }
 }
 
-function display(button)
+function display(value)
 {
-    let calculation = [];
-    if (button.className === 'num' || button.className === 'operation')
+    let display = document.querySelector(".display");
+
+    if (typeof value === "number")
     {
-        let display = document.querySelector(".display");
-        display.append(button.innerHTML);
-        calculation = display.innerHTML;
+        display.innerHTML = value;
+        console.log(display.innerHTML);
+        return;
     }
+    
+    else if (value.className === 'num' || value.className === 'operation')
+    {
+        
+        display.append(value.innerHTML);
+    }
+    
 }
 
 function getNumber(array, button)
@@ -67,18 +72,57 @@ function getOperation(button)
     return operation;
 }
 
+
 function main()
 {
     let buttons = document.querySelectorAll('button');
-    let numArray = [];
+    let numArray1 = [];
+    let numArray2 = [];
     let firstNum = 0;
     let secondNum = 0;
+    let numOperations = 0;
+    let result = 0;
+    let operation = "";
 
     buttons.forEach(button => button.addEventListener('click',() => { 
         display(button);
-        firstNum = getNumber(numArray, button);
-        console.log(firstNum);
-        console.log(getOperation(button));
+
+        if(button.className === "operation")
+        {
+            numOperations++;
+            console.log(numOperations);
+            if (operation === "")
+            {
+                operation = getOperation(button).toString();
+            }
+        }
+        
+        if (numOperations === 0){
+            firstNum = getNumber(numArray1, button);
+        }
+        else if (numOperations === 1)
+        {
+            secondNum = getNumber(numArray2, button);
+        }
+        else if (numOperations === 2)
+        {
+            result = operate(operation, parseInt(firstNum),parseInt(secondNum));
+            display(result);
+            console.log(operation); 
+        }
+
+        if(button.className ==="operation")
+        {
+            numOperations = 1;
+            firstNum = parseInt(result);
+            
+        }
+        else
+        {
+            display(result);
+            numOperations = 0;
+        }
     }));   
+    
 }
 main();
