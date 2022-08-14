@@ -20,9 +20,6 @@
     justify-content: flex-start;
     align-items: center;
 }
-h1{
-    padding: 20px;
-}
 .row-container{
     background-color: rgb(110, 106, 106);
     border-radius: 5%;
@@ -45,3 +42,5 @@ align-items: center;
 font-size: 2rem;
 font-weight: 900;
 }
+
+
